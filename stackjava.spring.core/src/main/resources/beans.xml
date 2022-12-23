@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- IoC -->
+	<bean id="user" class="stackjava.spring.core.ioc.User" scope="singleton">
+		<property name="username" value="seInternXuanHoa"></property>
+		<property name="password" value="seInternXuanHoa"></property>
+	</bean>
+
+	<!-- DI -->
+	<bean id="user-ci" class="stackjava.spring.core.ioc.User" scope="singleton">
+		<constructor-arg name="username" value="seInternXuanHoa"
+			type="String"></constructor-arg>
+		<constructor-arg name="password" value="seInternXuanHoa"
+			type="String"></constructor-arg>
+		<constructor-arg name="address" ref="address"></constructor-arg>
+	</bean>
+
+	<bean id="user-si" class="stackjava.spring.core.ioc.User" scope="singleton">
+		<property name="username" value="seInternXuanHoa"></property>
+		<property name="password" value="seInternXuanHoa"></property>
+		<property name="address" ref="address"></property>
+	</bean>
+
+	<!-- Object, List -->
+	<bean id="address" class="stackjava.spring.core.ioc.Address"
+		scope="singleton">
+		<property name="address">
+			<list>
+				<value>Ho Chi Minh City</value>
+				<value>Ha Noi</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- AOP -->
+	<bean id="systemctl" class="stackjava.spring.core.aop.SystemCTL"></bean>
+	<bean id="before-advice" class="stackjava.spring.core.aop.BeforeAdvice"></bean>
+	<bean id="after-advice" class="stackjava.spring.core.aop.AfterAdvice"></bean>
+	<bean id="throws-advice" class="stackjava.spring.core.aop.ThrowAdvices"></bean>
+	<bean id="systemctlProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="systemctl" />
+		<property name="interceptorNames">
+			<list>
+				<value>before-advice</value>
+				<value>after-advice</value>
+				<value>throws-advice</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- AspectJ -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<bean id="systemctl-aspectj" class="stackjava.spring.core.aspectj.SystemCTL"></bean>
+	<bean id="systemctl-logger" class="stackjava.spring.core.aspectj.SystemCTLLogger"></bean>
+
+	<!-- PropertyPlaceholderConfigurer -->
+	<bean id="datasource"
+		class="stackjava.spring.core.propertyplaceholderconfigurer.DataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>application.properties</value>
+		</property>
+	</bean>
+</beans>

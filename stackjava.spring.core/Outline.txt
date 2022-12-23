@@ -1,0 +1,6 @@
+- IoC, DI
+- AOP
+- AspectJ
+- PropertyPlaceholderConfigurer
+- Autowiring 
+- Component Scan

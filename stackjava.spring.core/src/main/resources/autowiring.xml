@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="address" class="stackjava.spring.core.autowiring.Address">
+		<property name="address" value="Ho Chi Minh City"></property>
+	</bean>
+
+	<bean id="manufacturer" class="stackjava.spring.core.autowiring.Manufacturer"
+		autowire="byType">
+		<property name="name" value="Volvo Ltd"></property>
+	</bean>
+
+	<!-- By Name -->
+	<bean id="volvo" class="stackjava.spring.core.autowiring.Vehicle"
+		autowire="byName">
+		<property name="name" value="Volvo"></property>
+		<property name="speed" value="1"></property>
+	</bean>
+
+	<!-- By Type -->
+	<bean id="volvo-type" class="stackjava.spring.core.autowiring.Vehicle"
+		autowire="byType">
+		<property name="name" value="Volvo"></property>
+		<property name="speed" value="1"></property>
+	</bean>
+
+	<!-- By Type -->
+	<bean id="volvo-constructor" class="stackjava.spring.core.autowiring.Vehicle"
+		autowire="constructor">
+		<property name="name" value="Volvo"></property>
+		<property name="speed" value="1"></property>
+	</bean>
+
+	<!-- No -->
+	<bean id="vehicle" class="stackjava.spring.core.autowiring.Vehicle">
+		<property name="name" value="Volvo"></property>
+		<property name="speed" value="1"></property>
+		<property name="manufacturer" ref="manufacturer"></property>
+	</bean>
+</beans>
